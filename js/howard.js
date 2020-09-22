@@ -74,7 +74,7 @@ function pickQuote(quotes) {
 }
 
 function getQuotes() {
-	return getJSON("https://howardchicken.com/js/howard.json")
+	return getJSON("/js/howard.json")
 		.then(function (response) {
 			pickQuote(response);
 		})
