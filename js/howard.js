@@ -138,7 +138,7 @@ async function sayQuote() {
 	msg.voice = danielsVoice.length
 	  ? danielsVoice[0]
 	  : gbVoices.length
-		? gbVoice[0] 
+		? gbVoices[0] 
 		: voices[0];
 
 	msg.volume = 1;
