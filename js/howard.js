@@ -113,8 +113,12 @@ async function sayQuote() {
 	const msg = new SpeechSynthesisUtterance();
 	const voices = await asyncVoices();
 
+	// limit voices to en-GB
+	const gbVoices = voices.filter(function (voice) {
+	  return voice.lang === "en-GB";
+	})
 	// we prefer the dulcet tones of Daniel
-	const danielsVoice = voices.filter(function (voice) {
+	const danielsVoice = gbVoices.filter(function (voice) {
 		const daniels = [
 			"Daniel",
 			"com.apple.ttsbundle.Daniel-compact",
@@ -125,8 +129,17 @@ async function sayQuote() {
 			return true;
 		  }
 	});
-
-	msg.voice = danielsVoice[0] || voices[0];
+	/*
+	  if dV has length, take its first item, 
+	  else if gbV has length, take its first item,
+	   else fall back to first in complete array
+	   (NB: some linters warn against nested ternaries. fair.)
+	*/
+	msg.voice = danielsVoice.length
+	  ? danielsVoice[0]
+	  : gbVoices.length
+		? gbVoice[0] 
+		: voices[0];
 
 	msg.volume = 1;
 	msg.rate = 1;
