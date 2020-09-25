@@ -115,7 +115,15 @@ async function sayQuote() {
 
 	// we prefer the dulcet tones of Daniel
 	const danielsVoice = voices.filter(function (voice) {
-		return voice.name === "Daniel";
+		const daniels = [
+			"Daniel",
+			"com.apple.ttsbundle.Daniel-compact",
+			"com.apple.speech.synthesis.voice.daniel",
+			"com.apple.speech.synthesis.voice.daniel.premium",
+		  ];
+		  if (daniels.includes(voice.name) || daniels.includes(voice.voiceURI)) {
+			return true;
+		  }
 	});
 
 	msg.voice = danielsVoice[0] || voices[0];
