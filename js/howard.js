@@ -113,12 +113,30 @@ async function sayQuote() {
 	const msg = new SpeechSynthesisUtterance();
 	const voices = await asyncVoices();
 
+	// limit voices to en-GB
+	const gbVoices = voices.filter(function (voice) {
+		return voice.lang === "en-GB";
+	})
+
 	// we prefer the dulcet tones of Daniel
-	const danielsVoice = voices.filter(function (voice) {
-		return voice.name === "Daniel";
+	const danielsVoice = gbVoices.filter(function (voice) {
+		// use attributes other than "name" to find Daniel
+		// (workaround for ios 14 regression,
+		// SpeechSynthesisVoices empty "name" attribute):
+		// https://bugs.webkit.org/show_bug.cgi?id=216684
+		const daniels = [
+			"Daniel",
+			"com.apple.ttsbundle.Daniel-compact",
+			"com.apple.speech.synthesis.voice.daniel",
+			"com.apple.speech.synthesis.voice.daniel.premium",
+		];
+
+		if (daniels.includes(voice.name) || daniels.includes(voice.voiceURI)) {
+			return true;
+		}
 	});
 
-	msg.voice = danielsVoice[0] || voices[0];
+	msg.voice = danielsVoice[0] || gbVoices.length || gbVoices[0] || voices[0];
 
 	msg.volume = 1;
 	msg.rate = 1;
