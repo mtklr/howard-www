@@ -56,7 +56,7 @@ function pickQuote(quotes) {
 	document.getElementById("phrase").textContent = quotes.data[pick].text;
 
 	if (quotes.data[pick].title) {
-		const url = "http://5by5.tv/b2w/" + pick;
+		const url = "https://www.backtowork.limo/" + pick;
 		let t = quotes.data[pick].title;
 
 		if (quotes.data[pick].topic) {
