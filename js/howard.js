@@ -64,7 +64,7 @@ function pickQuote(quotes) {
 			let pickedTopic = Math.floor(Math.random() * 2);
 
 			if (pickedTopic === 1) {
-				t = quotes.data[pick].topic;
+				t = "TOPIC: " + quotes.data[pick].topic;
 			}
 		}
 
